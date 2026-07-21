@@ -470,6 +470,32 @@
               </div>
             </div>
           </div>
+          <!-- Testimonial 11 -->
+          <div class="testimonial-card">
+            <span class="testimonial-card__quote-icon">“</span>
+            <div class="testimonial-card__stars">★★★★★</div>
+            <p class="testimonial-card__quote">The interview prep and soft skills classes helped me secure my first job. The mock placement drives were exactly like the real thing.</p>
+            <div class="testimonial-card__profile">
+              <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&h=120&q=80" alt="Rajesh Kumar, Leapnest Alumni" class="testimonial-card__avatar">
+              <div style="text-align: left;">
+                <div class="testimonial-card__name">Rajesh Kumar</div>
+                <div class="testimonial-card__role">Frontend Engineer, Capgemini</div>
+              </div>
+            </div>
+          </div>
+          <!-- Testimonial 12 -->
+          <div class="testimonial-card">
+            <span class="testimonial-card__quote-icon">“</span>
+            <div class="testimonial-card__stars">★★★★★</div>
+            <p class="testimonial-card__quote">Leapnest provided an amazing learning environment. The SQL and python courses are very practical and highly recommended.</p>
+            <div class="testimonial-card__profile">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80" alt="Meera Nair, Leapnest Alumni" class="testimonial-card__avatar">
+              <div style="text-align: left;">
+                <div class="testimonial-card__name">Meera Nair</div>
+                <div class="testimonial-card__role">Data Analyst, Infosys</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -487,12 +513,84 @@
         </button>
       </div>
 
-      <!-- Toggle Grid / View All button -->
-      <div style="text-align: center; margin-top: 30px;">
+      <!-- Toggle Grid / View All & Give Feedback buttons -->
+      <div style="text-align: center; margin-top: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
         <button class="btn btn--secondary testimonials-toggle-btn">View All Testimonials</button>
+        <button class="btn btn--primary open-feedback-modal-btn">Give Your Feedback</button>
       </div>
     </div>
   </section>
+
+  <!-- Give Feedback Modal -->
+  <div id="feedback-modal" class="modal-overlay">
+    <div class="modal-content animate-scale">
+      <button class="modal-close-btn" id="close-feedback-modal" aria-label="Close Modal">&times;</button>
+      <h3 class="modal-title">Share Your Experience</h3>
+      <p class="modal-subtitle">Your feedback helps future students understand the Leapnest experience.</p>
+      
+      <form id="feedback-form" class="modal-form">
+        <div class="form-group">
+          <label for="fb-name">Full Name *</label>
+          <input type="text" id="fb-name" required placeholder="e.g., Anjali Sharma">
+        </div>
+        
+        <div class="form-group">
+          <label for="fb-role">Role &amp; Company / College *</label>
+          <input type="text" id="fb-role" required placeholder="e.g., Software Engineer, Microsoft / Student, PSG Tech">
+        </div>
+        
+        <div class="form-group">
+          <label style="display: block; margin-bottom: 8px; font-weight: 600;">Rating *</label>
+          <div class="star-rating-input">
+            <span class="star-item star-item--active" data-rating="1">★</span>
+            <span class="star-item star-item--active" data-rating="2">★</span>
+            <span class="star-item star-item--active" data-rating="3">★</span>
+            <span class="star-item star-item--active" data-rating="4">★</span>
+            <span class="star-item star-item--active" data-rating="5">★</span>
+          </div>
+          <input type="hidden" id="fb-rating" value="5">
+        </div>
+
+        <div class="form-group">
+          <label style="display: block; margin-bottom: 8px; font-weight: 600;">Choose Avatar Profile *</label>
+          <div class="avatar-selector">
+            <label class="avatar-option">
+              <input type="radio" name="fb-avatar" value="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&h=120&q=80" checked>
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&h=120&q=80" alt="Female Avatar 1">
+            </label>
+            <label class="avatar-option">
+              <input type="radio" name="fb-avatar" value="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&h=120&q=80">
+              <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&h=120&q=80" alt="Male Avatar 1">
+            </label>
+            <label class="avatar-option">
+              <input type="radio" name="fb-avatar" value="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80" alt="Female Avatar 2">
+            </label>
+            <label class="avatar-option">
+              <input type="radio" name="fb-avatar" value="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80" alt="Male Avatar 2">
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="fb-quote">Your Feedback *</label>
+          <textarea id="fb-quote" required placeholder="Write a short summary of your learning experience at Leapnest Academy... (minimum 20 characters)" minlength="20" rows="4"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--primary" style="width: 100%; margin-top: 10px; padding: 12px 24px; font-weight: 600;">Submit Feedback</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Image Lightbox Modal -->
+  <div id="lightbox-modal" class="lightbox-overlay">
+    <button class="lightbox-close-btn" id="close-lightbox" aria-label="Close Lightbox">&times;</button>
+    <div class="lightbox-content animate-scale">
+      <img id="lightbox-img" src="" alt="Zoomed Student Avatar">
+      <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+  </div>
 
 
 
