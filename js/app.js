@@ -252,6 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let cards = Array.from(track.children);
     let cardCount = cards.length;
     let autoplayInterval = null;
+    const sliderContainer = document.querySelector('.testimonials-slider-container');
 
     function getSlideWidth() {
       if (window.innerWidth <= 600) {
@@ -284,8 +285,16 @@ document.addEventListener('DOMContentLoaded', () => {
         currentIndex = maxIndex >= 0 ? maxIndex : 0;
       }
 
-      const offset = currentIndex * (100 / visibleCount);
-      track.style.transform = `translateX(-${offset}%)`;
+      // Calculate pixel translation offset exactly to prevent cutoff/cropping
+      if (sliderContainer) {
+        const containerWidth = sliderContainer.getBoundingClientRect().width;
+        const gap = 30; // Matches css layout gap
+        const offset = currentIndex * (containerWidth + gap) / visibleCount;
+        track.style.transform = `translateX(-${offset}px)`;
+      } else {
+        const offset = currentIndex * (100 / visibleCount);
+        track.style.transform = `translateX(-${offset}%)`;
+      }
       
       // In infinite loop, the navigation buttons are always enabled and full opacity
       prevBtn.disabled = false;
