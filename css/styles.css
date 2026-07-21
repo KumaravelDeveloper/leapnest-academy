@@ -1333,10 +1333,54 @@ button, input, textarea, select {
   
   .footer__main {
     grid-template-columns: 1fr;
+    text-align: center;
+    gap: 40px;
   }
   
   .footer__main > * {
     grid-column: span 1 !important;
+  }
+
+  .footer__about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer__about .logo {
+    display: inline-flex;
+    justify-content: center;
+  }
+
+  .footer__desc {
+    text-align: center;
+    margin: 16px auto 0 auto;
+    max-width: 500px;
+  }
+
+  .footer__socials {
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .footer__title {
+    text-align: center;
+  }
+
+  .footer__links {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .footer__contact-card {
+    text-align: center;
+    justify-items: center;
+    padding: 30px 20px;
+  }
+
+  .footer__contact-item {
+    justify-content: center;
   }
 }
 
