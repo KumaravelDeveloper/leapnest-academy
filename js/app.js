@@ -245,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeLightboxBtn = document.querySelector('#close-lightbox');
   const lightboxImg = document.querySelector('#lightbox-img');
   const lightboxCaption = document.querySelector('#lightbox-caption');
+  const lightboxVideo = document.querySelector('#lightbox-video');
   const controls = document.querySelector('.slider-controls');
 
   if (track && prevBtn && nextBtn && toggleBtn) {
@@ -368,12 +369,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     updateSliderPosition();
 
-    // --- Lightbox Image Zoom Functionality ---
+    // --- Lightbox Video / Image Media Functionality ---
     // Use event delegation on document click to handle dynamically added cards too!
     document.addEventListener('click', (e) => {
-      if (e.target && e.target.classList.contains('testimonial-card__avatar')) {
-        const avatarImg = e.target;
-        const profileContainer = avatarImg.closest('.testimonial-card__profile');
+      const avatarContainer = e.target.closest('.testimonial-card__avatar-container');
+      if (avatarContainer) {
+        const avatarImg = avatarContainer.querySelector('.testimonial-card__avatar');
+        if (!avatarImg) return;
+
+        const profileContainer = avatarContainer.closest('.testimonial-card__profile');
         let name = '';
         let role = '';
         if (profileContainer) {
@@ -383,19 +387,48 @@ document.addEventListener('DOMContentLoaded', () => {
           if (roleEl) role = roleEl.textContent;
         }
         
-        lightboxImg.src = avatarImg.src;
+        const videoUrl = avatarImg.getAttribute('data-video-url');
+        if (videoUrl && lightboxVideo) {
+          lightboxVideo.src = videoUrl;
+          lightboxVideo.style.display = 'block';
+          if (lightboxImg) lightboxImg.style.display = 'none';
+          lightboxVideo.load();
+          lightboxVideo.play().catch(err => {
+            console.log("Auto-play was prevented by browser security rules:", err);
+          });
+        } else {
+          if (lightboxVideo) {
+            lightboxVideo.style.display = 'none';
+            lightboxVideo.pause();
+            lightboxVideo.src = '';
+          }
+          if (lightboxImg) {
+            lightboxImg.src = avatarImg.src;
+            lightboxImg.style.display = 'block';
+          }
+        }
+
         lightboxCaption.innerHTML = `${name} <span style="font-weight: 300; font-size: 0.95rem; display: block; margin-top: 4px; color: #cbd5e1;">${role}</span>`;
         lightboxModal.classList.add('lightbox-overlay--show');
+        stopAutoplay();
       }
     });
 
     if (closeLightboxBtn && lightboxModal) {
-      closeLightboxBtn.addEventListener('click', () => {
+      const closeLightbox = () => {
         lightboxModal.classList.remove('lightbox-overlay--show');
-      });
+        if (lightboxVideo) {
+          lightboxVideo.pause();
+          lightboxVideo.src = '';
+        }
+        if (!track.classList.contains('testimonials-grid-active')) {
+          startAutoplay();
+        }
+      };
+      closeLightboxBtn.addEventListener('click', closeLightbox);
       lightboxModal.addEventListener('click', (e) => {
         if (e.target === lightboxModal) {
-          lightboxModal.classList.remove('lightbox-overlay--show');
+          closeLightbox();
         }
       });
     }
@@ -474,7 +507,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="testimonial-card__stars" style="color: #ffb900;">${starsStr}</div>
             <p class="testimonial-card__quote">${quoteVal}</p>
             <div class="testimonial-card__profile">
-              <img src="${selectedAvatar}" alt="${nameVal}, Leapnest Alumni" class="testimonial-card__avatar">
+              <div class="testimonial-card__avatar-container">
+                <img src="${selectedAvatar}" alt="${nameVal}, Leapnest Alumni" class="testimonial-card__avatar" data-video-url="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4">
+                <div class="testimonial-card__play-overlay">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
               <div style="text-align: left;">
                 <div class="testimonial-card__name">${nameVal}</div>
                 <div class="testimonial-card__role">${roleVal}</div>
